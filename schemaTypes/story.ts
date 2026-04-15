@@ -412,12 +412,13 @@ export const story = defineType({
         { type: "storyMediaBlock" },
         { type: "storyTextBlock" },
         { type: "storySpacerBlock" },
+        { type: "storyTechStack" },
         // Legacy (kept for backward compat with existing documents)
         { type: "storyMediaModule" },
         { type: "storyTwoColImageModule" },
         { type: "storyTextModule" },
       ],
-      description: "신규: Media Block / Text Block / Spacer · 기존 데이터: Legacy 모듈 자동 인식",
+      description: "신규: Media Block / Text Block / Spacer / Tech Stack · 기존 데이터: Legacy 모듈 자동 인식",
     }),
 
     defineField({
@@ -589,12 +590,56 @@ const codeBlock = defineType({
   },
 });
 
+// ── Tech Stack (icon badge row) ───────────────────────────────────
+// Free-form string items. The frontend maps each item to a Simple
+// Icon via an alias table; unmatched items render as text-only.
+const storyTechStack = defineType({
+  name: "storyTechStack",
+  title: "Tech Stack",
+  type: "object",
+  fields: [
+    defineField({
+      name: "heading",
+      title: "Heading (optional)",
+      type: "string",
+      initialValue: "Stack",
+    }),
+    defineField({
+      name: "items",
+      title: "Items",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
+      description:
+        'Free-form labels, e.g. ["React", "Three.js", "Vite"]. The frontend matches icons automatically; unmatched items still render as text.',
+      validation: (Rule) => Rule.min(1),
+    }),
+    defineField({
+      name: "paddingTop",
+      title: "Padding Top (px)",
+      type: "number",
+      initialValue: 160,
+    }),
+  ],
+  preview: {
+    select: { heading: "heading", items: "items" },
+    prepare({ heading, items }) {
+      const n = Array.isArray(items) ? items.length : 0;
+      return {
+        title: heading || "Tech Stack",
+        subtitle: `${n} item${n === 1 ? "" : "s"}${n ? " · " + items.slice(0, 4).join(", ") : ""}`,
+      };
+    },
+  },
+});
+
 export {
   storyMediaBlock,
   storyTextBlock,
   storySpacerBlock,
   storyHeroModule,
   codeBlock,
+  storyTechStack,
   // legacy
   storyMediaModule,
   storyTwoColImageModule,

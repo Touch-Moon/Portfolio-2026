@@ -466,6 +466,17 @@ export const work = defineType({
       description: 'e.g. ["Strategic Design", "Research", "Branding"]',
     }),
 
+    // ── Tools / Tech Stack (badge row on the single page)
+    defineField({
+      name: "tools",
+      title: "Tools / Tech Stack",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
+      description:
+        'Free-form labels rendered as icon + text badges. Frontend maps each item to a Simple Icon via an alias table.',
+    }),
+
     // ── External Links (Single page buttons)
     defineField({
       name: "siteUrl",

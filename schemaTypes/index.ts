@@ -8,6 +8,7 @@ import {
   storySpacerBlock,
   storyHeroModule,
   codeBlock,
+  storyTechStack,
   // Legacy (backward compat)
   storyMediaModule,
   storyTwoColImageModule,
@@ -32,6 +33,7 @@ export const schemaTypes = [
   storySpacerBlock,
   storyHeroModule,
   codeBlock,
+  storyTechStack,
 
   // Legacy story modules (kept so existing documents still validate)
   storyMediaModule,
