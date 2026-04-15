@@ -1,11 +1,38 @@
-import { caseStudy } from "./caseStudy";
-import { project } from "./project";
-import { post } from "./post";
-import { page } from "./page";
+import { work, mediaBlock, textBlock, spacerBlock } from "./work";
+import { workCategory } from "./workCategory";
+import { storyCategory } from "./storyCategory";
+import {
+  story,
+  storyMediaBlock,
+  storyTextBlock,
+  storySpacerBlock,
+  storyHeroModule,
+  // Legacy (backward compat)
+  storyMediaModule,
+  storyTwoColImageModule,
+  storyTextModule,
+} from "./story";
 
 export const schemaTypes = [
-  caseStudy,
-  project,
-  post,
-  page,
+  // Documents
+  work,
+  story,
+  workCategory,
+  storyCategory,
+
+  // Work object types (3-module system)
+  mediaBlock,
+  textBlock,
+  spacerBlock,
+
+  // Story object types (aligned with frontend StorySingle)
+  storyMediaBlock,
+  storyTextBlock,
+  storySpacerBlock,
+  storyHeroModule,
+
+  // Legacy story modules (kept so existing documents still validate)
+  storyMediaModule,
+  storyTwoColImageModule,
+  storyTextModule,
 ];
