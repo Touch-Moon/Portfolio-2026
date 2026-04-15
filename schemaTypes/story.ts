@@ -132,6 +132,13 @@ const storyTextBlock = defineType({
         {
           type: "block",
           marks: {
+            decorators: [
+              { title: "Strong", value: "strong" },
+              { title: "Emphasis", value: "em" },
+              { title: "Underline", value: "underline" },
+              { title: "Strike", value: "strike-through" },
+              { title: "Code", value: "code" },
+            ],
             annotations: [
               {
                 name: "link",
@@ -146,6 +153,7 @@ const storyTextBlock = defineType({
           },
         },
         { type: "image" },
+        { type: "codeBlock" },
       ],
     }),
     defineField({
@@ -495,6 +503,13 @@ const storyTextModule = defineType({
       of: [{
         type: "block",
         marks: {
+          decorators: [
+            { title: "Strong", value: "strong" },
+            { title: "Emphasis", value: "em" },
+            { title: "Underline", value: "underline" },
+            { title: "Strike", value: "strike-through" },
+            { title: "Code", value: "code" },
+          ],
           annotations: [{
             name: "link",
             type: "object",
@@ -505,7 +520,8 @@ const storyTextModule = defineType({
             ],
           }],
         },
-      }],
+      },
+      { type: "codeBlock" }],
     }),
   ],
   preview: {
@@ -516,11 +532,69 @@ const storyTextModule = defineType({
   },
 });
 
+// ── Code Block (inside Portable Text) ────────────────────────────
+// Multi-line syntax-highlightable code snippet. Added to the `body`
+// arrays of storyTextBlock and legacy storyTextModule.
+const codeBlock = defineType({
+  name: "codeBlock",
+  title: "Code Block",
+  type: "object",
+  fields: [
+    defineField({
+      name: "language",
+      title: "Language",
+      type: "string",
+      options: {
+        list: [
+          { title: "Plain text", value: "text" },
+          { title: "TypeScript", value: "ts" },
+          { title: "JavaScript", value: "js" },
+          { title: "TSX", value: "tsx" },
+          { title: "JSX", value: "jsx" },
+          { title: "HTML", value: "html" },
+          { title: "CSS", value: "css" },
+          { title: "SCSS", value: "scss" },
+          { title: "JSON", value: "json" },
+          { title: "Bash", value: "bash" },
+          { title: "Markdown", value: "md" },
+          { title: "GROQ", value: "groq" },
+        ],
+        layout: "dropdown",
+      },
+      initialValue: "ts",
+    }),
+    defineField({
+      name: "filename",
+      title: "Filename (optional)",
+      type: "string",
+      description: 'Shown above the code block, e.g. "src/utils/wave.ts"',
+    }),
+    defineField({
+      name: "code",
+      title: "Code",
+      type: "text",
+      rows: 10,
+      validation: (Rule) => Rule.required(),
+    }),
+  ],
+  preview: {
+    select: { language: "language", filename: "filename", code: "code" },
+    prepare({ language, filename, code }) {
+      const firstLine = (code ?? "").split("\n")[0].slice(0, 60);
+      return {
+        title: filename || `<code> ${language ?? "text"}`,
+        subtitle: firstLine,
+      };
+    },
+  },
+});
+
 export {
   storyMediaBlock,
   storyTextBlock,
   storySpacerBlock,
   storyHeroModule,
+  codeBlock,
   // legacy
   storyMediaModule,
   storyTwoColImageModule,
