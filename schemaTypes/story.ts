@@ -290,12 +290,9 @@ export const story = defineType({
   type: "document",
   orderings: [
     {
-      title: "Display Order",
-      name: "orderAsc",
-      by: [
-        { field: "order", direction: "asc" },
-        { field: "publishedAt", direction: "desc" },
-      ],
+      title: "Newest first",
+      name: "newest",
+      by: [{ field: "publishedAt", direction: "desc" }],
     },
   ],
   fields: [
@@ -427,14 +424,6 @@ export const story = defineType({
         { type: "storyTextModule" },
       ],
       description: "신규: Media Block / Text Block / Spacer / Tech Stack · 기존 데이터: Legacy 모듈 자동 인식",
-    }),
-
-    defineField({
-      name: "order",
-      title: "Display Order",
-      type: "number",
-      initialValue: 99,
-      description: "낮을수록 먼저. 비워두면 publishedAt 기준.",
     }),
   ],
 
