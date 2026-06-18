@@ -386,6 +386,14 @@ export const story = defineType({
       options: { hotspot: true },
       description: "권장 1762×1309. 홈/리스트 50% 세로형. 미등록 시 Landscape에서 자동 폴백.",
     }),
+    defineField({
+      name: "thumbnailVideo",
+      title: "Thumbnail Video — Loop (선택, Dept 스타일)",
+      type: "file",
+      options: { accept: "video/*" },
+      description:
+        "짧은 무음 루프 영상(권장 ~6초, mp4). 등록 시 리스트 카드에서 자동재생 루프로 표시되고, 위 Landscape 썸네일은 poster/폴백으로 사용됩니다.",
+    }),
 
     defineField({
       name: "listDescription",
