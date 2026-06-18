@@ -333,6 +333,12 @@ export const story = defineType({
     }),
     // ── External Links (Single page buttons)
     defineField({
+      name: "liveUrl",
+      title: "Live URL",
+      type: "url",
+      description: "Live demo link — shown as 'Live ↗' button on the Story single page",
+    }),
+    defineField({
       name: "githubUrl",
       title: "GitHub URL",
       type: "url",
