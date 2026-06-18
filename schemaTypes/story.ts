@@ -1,4 +1,5 @@
 import { defineType, defineField } from "sanity";
+import { orderRankField, orderRankOrdering } from "@sanity/orderable-document-list";
 
 // ── Story / Insight Module Object Types ──────────────────────────────
 // Aligned with frontend StorySingle component (storyMediaBlock / storyTextBlock / storySpacerBlock)
@@ -289,6 +290,7 @@ export const story = defineType({
   title: "Story / Insight",
   type: "document",
   orderings: [
+    orderRankOrdering,
     {
       title: "Newest first",
       name: "newest",
@@ -296,6 +298,9 @@ export const story = defineType({
     },
   ],
   fields: [
+    // Drag-to-reorder rank (managed by @sanity/orderable-document-list).
+    // New documents are placed at the top of the list.
+    orderRankField({ type: "story", newItemPosition: "before" }),
     defineField({
       name: "title",
       title: "Title",
